@@ -24,14 +24,14 @@
 
     function render(){
         var selection = d3.select("#container")
-                    .selectAll("div")
-                    .data(newData); // <- D
+                    	  .selectAll("div")
+                    	  .data(newData); // <- D
 
         selection.enter().append("div").append("span");
 
         selection.exit().remove();
 
-        selection.attr("class", "v-bar")
+        selection
             .style("height", function (d, i) {
                 return d(i) + "px"; // <- E
             })
@@ -49,5 +49,4 @@
 </script>
 
 </body>
-
 </html>

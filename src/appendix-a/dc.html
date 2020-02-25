@@ -21,7 +21,7 @@
 <script type="text/javascript">
     var timeFormat = d3.time.format.iso;
 
-    d3.json('../../data/payment.json', function(json){
+    d3.json('../../data/payment.djson', function(json){
         var data = crossfilter(json);
 
         var hours = data.dimension(function(d){

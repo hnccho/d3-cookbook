@@ -44,22 +44,19 @@
         .domain([1, 10])
         .rangeRound([1, 10]);
 
-
     function render(data, scale, selector) {
-        d3.select(selector).selectAll("div.cell")
-                .data(data)
-                .enter().append("div").classed("cell", true);
+        var selection = d3.select(selector)
+        			   	  .selectAll("div.cell")
+		  				  .data(data); // <- D
+ 
+		selection.enter().append("div").classed("cell", true);
+		selection.exit().remove();
 
-        d3.select(selector).selectAll("div.cell")
-                .data(data)
-                .exit().remove();
-
-        d3.select(selector).selectAll("div.cell")
-                .data(data)
-                .style("display", "inline-block")
-                .text(function (d) {
-                    return d3.round(scale(d), 2);
-                });
+		selection
+            .style("display", "inline-block")
+            .text(function (d) {
+            	return d3.round(scale(d), 2);
+            });
     }
 
     render(data, linear, "#linear");

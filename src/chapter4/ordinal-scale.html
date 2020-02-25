@@ -40,23 +40,21 @@
         .range(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]);
         
     function render(data, scale, selector) { // <-C
-        d3.select(selector).selectAll("div.cell")
-                    .data(data)
-                .enter().append("div").classed("cell", true);
+        var selection = d3.select(selector)
+	   	  				  .selectAll("div.cell")
+		  				  .data(data); // <- D
 
-        d3.select(selector).selectAll("div.cell")
-                    .data(data)
-                .exit().remove();
+		selection.enter().append("div").classed("cell", true);
+		selection.exit().remove();
 
-        d3.select(selector).selectAll("div.cell")
-                    .data(data)
-                .style("display", "inline-block")
-                .style("background-color", function(d){  // <-D
-                    return scale(d).indexOf("#")>=0?scale(d):"white";
-                })
-                .text(function (d) { // <-E
-                    return scale(d);
-                });
+		selection
+            .style("display", "inline-block")
+            .style("background-color", function(d){  // <-D
+                return scale(d).indexOf("#")>=0?scale(d):"white";
+            })
+            .text(function (d) { // <-E
+                return scale(d);
+            });
     }
 
     render(data, alphabet, "#alphabet"); // <-F

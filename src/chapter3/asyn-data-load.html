@@ -27,18 +27,14 @@
     ];
 
     function render(data) {
-        d3.select("#chart").selectAll("div.h-bar") // <-B
-                .data(data)
-            .enter().append("div")
-            .attr("class", "h-bar")
-            .append("span");
+        var selection = d3.select("#chart")
+		  				  .selectAll("div.h-bar")
+	  	  				  .data(data); // <- D
+	  	
+	  	selection.enter().append("div").attr("class", "h-bar").append("span");
+		selection.exit().remove();
 
-        d3.select("#chart").selectAll("div.h-bar") // <-C
-                .data(data)
-            .exit().remove();
-
-        d3.select("#chart").selectAll("div.h-bar") // <-D
-                .data(data)
+		selection
             .attr("class", "h-bar")
             .style("width", function (d) {
                 return (d.expense * 5) + "px";
@@ -51,8 +47,8 @@
 
     render(data);
 
-    function load(){ // <-E
-        d3.json("data.json", function(error, json){ // <-F
+    function dataload(){ // <-E
+        d3.json("data.djson", function(error, json){ // <-F
             data = data.concat(json);  
             render(data);
         });
@@ -60,7 +56,7 @@
 </script>
 
 <div class="control-group">
-    <button onclick="load()">Load Data from JSON feed</button>
+    <button onclick="dataload()">Load Data from JSON feed</button>
 </div>
 
 </body>

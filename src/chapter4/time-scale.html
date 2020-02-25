@@ -19,7 +19,7 @@
         end = new Date(2013, 11, 31),
         range = [0, 1200],
         time = d3.time.scale().domain([start, end]) // <-B
-            .rangeRound(range), // <-C
+                 .rangeRound(range), // <-C
         max = 12,
         data = [];
 
@@ -30,24 +30,21 @@
     }
 
     function render(data, scale, selector) { // <-E
-        d3.select(selector).selectAll("div.fixed-cell")
-                    .data(data)
-                .enter()
-                    .append("div").classed("fixed-cell", true);
+        var selection = d3.select(selector)
+	   	  				  .selectAll("div.fixed-cell")
+		  			      .data(data); // <- D
 
-        d3.select(selector).selectAll("div.fixed-cell")
-                    .data(data)
-                .exit().remove();
+		selection.enter().append("div").classed("fixed-cell", true);
+		selection.exit().remove();
 
-        d3.select(selector).selectAll("div.fixed-cell")
-                    .data(data)
-                .style("margin-left", function(d){ // <-F
-                    return scale(d) + "px";
-                })
-                .html(function (d) { // <-G
-                    var format = d3.time.format("%x"); // <-H
-                    return format(d) + "<br>" + scale(d) + "px";
-                });
+		selection
+            .style("margin-left", function(d){ // <-F
+                return scale(d) + "px";
+            })
+            .html(function (d) { // <-G
+                var format = d3.time.format("%x"); // <-H
+                return format(d) + "<br>" + scale(d) + "px";
+            });
     }
 
     render(data, time, "#time");

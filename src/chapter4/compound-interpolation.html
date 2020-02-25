@@ -27,26 +27,23 @@
     for (var i = 0; i < max; ++i) data.push(i);
 
     function render(data, scale, selector) { // <-C
-        d3.select(selector).selectAll("div.v-bar")
-                .data(data)
-                .enter().append("div").classed("v-bar", true)
-                .append("span");
+        var selection = d3.select(selector)
+		  				  .selectAll("div.v-bar")
+		  				  .data(data); // <- D
 
-        d3.select(selector).selectAll("div.v-bar")
-                .data(data)
-                .exit().remove();
+		selection.enter().append("div").classed("v-bar", true).append("span");
+		selection.exit().remove();
 
-        d3.select(selector).selectAll("div.v-bar")
-                .data(data)
-                .classed("v-bar", true)
-                .style("height", function(d){ // <-D
-                    return scale(d).height;
-                }) 
-                .style("background-color", function(d){ // <-E
-                    return scale(d).color;
-                })
-                .select("span")
-                .text(function(d,i){return i;});
+		selection
+            .classed("v-bar", true)
+            .style("height", function(d){ // <-D
+                return scale(d).height;
+            }) 
+            .style("background-color", function(d){ // <-E
+                return scale(d).color;
+            })
+            .select("span")
+            .text(function(d,i){return i;});
     }
 
     render(data, compoundScale, "#compound");

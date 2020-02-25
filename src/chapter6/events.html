@@ -17,7 +17,7 @@
             .style("background-color", "steelblue")
             .style("color", "white")
             .text("waiting") // <-A
-        .transition().duration(duration) // <-B
+            .transition().duration(duration) // <-B
                 .delay(1000) // <-C
                 .each("start", function(){ // <-D
                     console.log(arguments);

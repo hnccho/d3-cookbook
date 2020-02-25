@@ -25,19 +25,14 @@
     ];
 
     function render(data, category) {
-        d3.select("body").selectAll("div.h-bar") // <-B
-                .data(data)
-			.enter()
-            .append("div")
-                .attr("class", "h-bar")
-			.append("span");
+        var selection = d3.select("body")
+			  			  .selectAll("div.h-bar")
+		  				  .data(data); // <- D
 
-        d3.select("body").selectAll("div.h-bar") // <-C
-                .data(data)
-            .exit().remove();
+		selection.enter().append("div").attr("class", "h-bar").append("span");
+  		selection.exit().remove();
 
-        d3.select("body").selectAll("div.h-bar") // <-D
-                .data(data)
+  		selection
             .attr("class", "h-bar")
             .style("width", function (d) {
                 return (d.expense * 5) + "px";}
@@ -46,12 +41,12 @@
                 .text(function (d) {
                     return d.category;
                 });
-
-        d3.select("body").selectAll("div.h-bar")
-                .filter(function (d, i) { // <-E
-                    return d.category == category;
-                })
-                .classed("selected", true);
+  		
+  		selection
+            .filter(function (d, i) { // <-E
+                 return d.category == category;
+            })
+            .classed("selected", true);
     }
 
     render(data);

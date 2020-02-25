@@ -33,19 +33,14 @@
     for (var i = 0; i < max; ++i) data.push(i);
 
     function render(data, scale, selector) { // <-D
-        d3.select(selector).selectAll("div.cell")
-                .data(data)
-            .enter()
-                .append("div")
-                    .classed("cell", true)
-                .append("span");
+        var selection = d3.select(selector)
+			  			  .selectAll("div.cell")
+		  				  .data(data); // <- D
 
-        d3.select(selector).selectAll("div.cell")
-                .data(data)
-            .exit().remove();
+		selection.enter().append("div").classed("cell", true).append("span");
+		selection.exit().remove();
 
-        d3.select(selector).selectAll("div.cell")
-                .data(data)
+		selection
             .style("display", "inline-block")
             .style("background-color", function(d){
                 return scale(d); // <-E
